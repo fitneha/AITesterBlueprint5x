@@ -1,0 +1,8 @@
+node_modules/
+.vercel/
+public/
+src/frontend/dist/
+.env
+.env.*
+!.env.example
+npm-debug.log*

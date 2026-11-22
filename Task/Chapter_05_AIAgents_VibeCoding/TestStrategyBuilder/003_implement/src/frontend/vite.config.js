@@ -10,7 +10,7 @@ export default defineConfig({
     proxy: { "/api": "http://127.0.0.1:3002" }
   },
   build: {
-    outDir: "dist",
+    outDir: "../../public",
     emptyOutDir: true
   }
 });

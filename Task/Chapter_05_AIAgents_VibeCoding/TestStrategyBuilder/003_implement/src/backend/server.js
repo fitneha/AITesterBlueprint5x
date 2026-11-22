@@ -28,7 +28,7 @@ import {
 
 const app = express();
 const currentDirectory = dirname(fileURLToPath(import.meta.url));
-const frontendDirectory = resolve(currentDirectory, "../frontend/dist");
+const frontendDirectory = resolve(currentDirectory, "../../public");
 
 app.use(express.json({ limit: "10mb" }));
 
@@ -151,7 +151,7 @@ app.post("/api/strategy/regenerate-section", async (request, response) => {
   }
 });
 
-if (existsSync(frontendDirectory)) {
+if (process.env.VERCEL !== "1" && existsSync(frontendDirectory)) {
   app.use(express.static(frontendDirectory));
   app.get("*", (_request, response) => response.sendFile(resolve(frontendDirectory, "index.html")));
 }

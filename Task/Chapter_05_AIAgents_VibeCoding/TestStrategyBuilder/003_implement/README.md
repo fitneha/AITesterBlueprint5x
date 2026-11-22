@@ -12,10 +12,9 @@ From this directory:
 
 ```powershell
 npm install
-Copy-Item .env.example .env
 ```
 
-Configure `.env` with the Jira and model-provider values. The backend searches upward from `src/backend` for `.env`, so it can also use the existing parent `.env`. Process environment variables take precedence. Secrets are read only by the backend and are never returned to the frontend.
+Create a local `.env` with the Jira and model-provider values below. The backend searches upward from `src/backend` for `.env`, so it can also use the existing parent `.env`. Process environment variables take precedence. Secrets are read only by the backend and are never returned to the frontend. `.env` is git-ignored; do not commit it.
 
 Jira values:
 
@@ -59,6 +58,14 @@ npm.cmd test
 npm.cmd run build
 npm.cmd start
 ```
+
+## Deploy to Vercel
+
+The Express app is exposed from `src/server.js`, and `npm run build` writes the frontend into `public/`, which Vercel serves as static assets. Vercel environment variables must be configured in the project settings; the local `.env` file is not deployed.
+
+Before deploying, enable Vercel Deployment Protection for production and preview deployments. This app has no application login and its API uses Jira and model-provider credentials, so do not make it publicly accessible. Add `JIRA_BASE_URL`, `JIRA_EMAIL`, `JIRA_TOKEN`, `LLM_PROVIDER`, `GROQ_API_KEY`, and `GROQ_MODEL` as Vercel environment variables. If using Ollama, its URL must be reachable from Vercel; `localhost` refers to the Vercel function environment, not your computer.
+
+After authenticating with `npx vercel login`, run `npx vercel` from this directory to create/link the project. Set the environment variables and confirm access protection in the Vercel dashboard before deploying production with `npx vercel --prod`. The default domain uses `.vercel.app` (for example, `teststrategybuilder.vercel.app`, if available).
 
 ## Use
 

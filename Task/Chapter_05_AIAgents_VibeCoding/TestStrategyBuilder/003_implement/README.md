@@ -61,7 +61,7 @@ npm.cmd start
 
 ## Deploy to Vercel
 
-The Express app is exposed from `src/server.js`, and `npm run build` writes the frontend into `public/`, which Vercel serves as static assets. Vercel environment variables must be configured in the project settings; the local `.env` file is not deployed.
+The Express app is exposed as a Vercel function from `api/index.js` (all `/api/*` requests are rewritten to it in `vercel.json`), and `npm run build` writes the frontend into `public/`, which Vercel serves as static assets. Vercel environment variables must be configured in the project settings; the local `.env` file is not deployed.
 
 Before deploying, enable Vercel Deployment Protection for production and preview deployments. This app has no application login and its API uses Jira and model-provider credentials, so do not make it publicly accessible. Add `JIRA_BASE_URL`, `JIRA_EMAIL`, `JIRA_TOKEN`, `LLM_PROVIDER`, `GROQ_API_KEY`, and `GROQ_MODEL` as Vercel environment variables. If using Ollama, its URL must be reachable from Vercel; `localhost` refers to the Vercel function environment, not your computer.
 
